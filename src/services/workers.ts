@@ -11,8 +11,8 @@ export async function getWorkers(orderBy: 'recientes' | 'antiguos' = 'recientes'
             nombre: u.nombre,
             rol: u.rol,
             email: u.email,
-            telefono: '+56900000000', // Mock phone
-            activo: true,
+            telefono: (u as any).telefono || '+56900000000',
+            activo: (u as any).activo !== undefined ? (u as any).activo : true,
             created_at: new Date().toISOString(),
             updated_at: new Date().toISOString()
         }))
