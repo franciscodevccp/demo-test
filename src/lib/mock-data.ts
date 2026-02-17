@@ -24,7 +24,8 @@ export const MOCK_CUSTOMERS = [
         telefono: '+56912345678',
         rut: '12.345.678-9',
         direccion: 'Av. Siempre Viva 123',
-        created_at: new Date().toISOString()
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
     },
     {
         id: 'cust-2',
@@ -33,7 +34,8 @@ export const MOCK_CUSTOMERS = [
         telefono: '+56987654321',
         rut: '98.765.432-1',
         direccion: 'Calle Falsa 123',
-        created_at: new Date().toISOString()
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
     }
 ]
 
@@ -47,7 +49,8 @@ export const MOCK_VEHICLES = [
         ano: 2020,
         kilometraje: 45000,
         customer_id: 'cust-1',
-        created_at: new Date().toISOString()
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
     },
     {
         id: 'veh-2',
@@ -58,7 +61,8 @@ export const MOCK_VEHICLES = [
         ano: 2022,
         kilometraje: 15000,
         customer_id: 'cust-2',
-        created_at: new Date().toISOString()
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
     }
 ]
 
