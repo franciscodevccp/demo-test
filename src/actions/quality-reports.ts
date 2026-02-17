@@ -44,17 +44,17 @@ export async function submitQualityEvidence(data: {
     return { success: true }
 }
 
-export async function approveQualityReport(reportId: string, comments: string) {
+export async function approveQualityReport(reportId: string, comments?: string): Promise<{ success: boolean; error?: string }> {
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 300))
-    console.log(`Mock Approve Quality Report ${reportId}. Comments: ${comments}`)
+    console.log(`Mock Approve Quality Report ${reportId}. Comments: ${comments || 'No comments'}`)
 
     revalidatePath('/admin/calidad')
     return { success: true }
 }
 
 
-export async function rejectQualityReport(reportId: string, comments: string) {
+export async function rejectQualityReport(reportId: string, comments: string): Promise<{ success: boolean; error?: string }> {
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 300))
     console.log(`Mock Reject Quality Report ${reportId}. Comments: ${comments}`)

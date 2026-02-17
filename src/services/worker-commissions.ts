@@ -54,7 +54,7 @@ export async function getWorkerCommissions(workerId: string): Promise<WorkerComm
                 patente: vehicle.patente,
                 marca: vehicle.marca,
                 modelo: vehicle.modelo,
-                año: vehicle.ano,
+                año: vehicle.año,
                 color: vehicle.color
             } : null,
             customer: customer ? {

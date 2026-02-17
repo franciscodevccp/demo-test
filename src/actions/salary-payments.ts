@@ -3,11 +3,11 @@
 import { revalidatePath } from 'next/cache'
 import { MOCK_USERS, MOCK_COMMISSIONS, MOCK_PANOS } from '@/lib/mock-data'
 
-export async function createSalaryPayment(workerId: string, rawData: any) {
+export async function createSalaryPayment(data: any): Promise<{ success: boolean; error?: string }> {
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 500))
 
-    console.log(`Mock Create Salary Payment for Worker ${workerId}:`, rawData)
+    console.log(`Mock Create Salary Payment:`, data)
 
     revalidatePath('/admin/pagos')
     return { success: true }
@@ -25,10 +25,16 @@ export async function searchWorkersForPayment(query: string) {
     ).map(u => ({
         id: u.id,
         nombre: u.nombre,
-        rol: u.rol
+        rol: u.rol as any // Cast to any to avoid type error with 'trabajador' mock role
     }))
 
-    return workers
+    return workers.map((worker) => ({
+        ...worker,
+        telefono: null,
+        activo: true,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+    }))
 }
 
 export async function getWorkerPaymentData(workerId: string) {
@@ -38,13 +44,17 @@ export async function getWorkerPaymentData(workerId: string) {
     const worker = MOCK_USERS.find(u => u.id === workerId)
 
     if (!worker) {
-        return { error: 'Trabajador no encontrado' }
+        throw new Error('Trabajador no encontrado')
     }
 
     // Get unpaid commissions
     const commissions = MOCK_COMMISSIONS.filter(c =>
         c.worker_id === workerId && c.estado === 'pendiente'
-    )
+    ).map(c => ({
+        ...c,
+        worker_role: c.worker_role as any,
+        estado: c.estado as any
+    }))
 
     // Get unpaid panos
     const panos = (MOCK_PANOS as any[]).filter(p =>
@@ -55,9 +65,13 @@ export async function getWorkerPaymentData(workerId: string) {
         worker: {
             id: worker.id,
             nombre: worker.nombre,
-            rol: worker.rol
+            rol: worker.rol as any,
+            telefono: null,
+            activo: true,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
         },
-        commissions,
-        panos
+        commissions: commissions || [],
+        panos: panos || []
     }
 }

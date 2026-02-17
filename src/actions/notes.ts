@@ -67,7 +67,7 @@ export async function getNotesCountAction() {
     }
 }
 
-export async function searchPatentesAction(query: string) {
+export async function searchPatentesAction(query: string): Promise<{ patentes: { patente: string; marca: string; modelo: string; año: number }[]; error?: string }> {
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 300))
 
@@ -79,7 +79,7 @@ export async function searchPatentesAction(query: string) {
         patente: v.patente,
         marca: v.marca,
         modelo: v.modelo,
-        año: v.ano
+        año: v.año
     }))
 
     return { patentes: results }

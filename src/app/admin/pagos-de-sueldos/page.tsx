@@ -2,7 +2,7 @@ import { AdminHeader } from '@/components/admin/admin-header'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { DollarSign, Plus } from 'lucide-react'
 import { getSalaryPayments } from '@/services/salary-payments'
-import { NuevoPagoForm } from '@/components/admin/salary-payments/nuevo-pago-form'
+// import { NuevoPagoForm } from '@/components/admin/salary-payments/nuevo-pago-form'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
@@ -37,7 +37,7 @@ export default async function PagosDeSueldosPage({ searchParams }: PagosDeSueldo
     const totalComisiones = payments
         .filter(p => p.tipo_pago === 'comision')
         .reduce((sum, p) => sum + (p.monto || 0), 0)
-    
+
     const totalPanos = payments
         .filter(p => p.tipo_pago === 'panos')
         .reduce((sum, p) => sum + (p.monto || 0), 0)
@@ -62,7 +62,9 @@ export default async function PagosDeSueldosPage({ searchParams }: PagosDeSueldo
                                 Busca un trabajador y registra su pago de sueldo
                             </p>
                         </div>
-                        <NuevoPagoForm />
+                        <div className="p-8 text-center text-zinc-400 border border-dashed border-zinc-700 rounded-lg">
+                            <p>Funcionalidad desactivada en modo vista.</p>
+                        </div>
                     </>
                 ) : (
                     <>
@@ -129,11 +131,10 @@ export default async function PagosDeSueldosPage({ searchParams }: PagosDeSueldo
                                                             <span className="font-semibold text-white">
                                                                 {payment.worker.nombre}
                                                             </span>
-                                                            <span className={`text-xs px-2 py-1 rounded-full ${
-                                                                payment.tipo_pago === 'comision'
-                                                                    ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
-                                                                    : 'bg-green-500/20 text-green-400 border border-green-500/30'
-                                                            }`}>
+                                                            <span className={`text-xs px-2 py-1 rounded-full ${payment.tipo_pago === 'comision'
+                                                                ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
+                                                                : 'bg-green-500/20 text-green-400 border border-green-500/30'
+                                                                }`}>
                                                                 {payment.tipo_pago === 'comision' ? 'Comisión' : 'Paños'}
                                                             </span>
                                                         </div>

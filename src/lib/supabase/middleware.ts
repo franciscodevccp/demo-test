@@ -31,9 +31,8 @@ export async function updateSession(request: NextRequest) {
         data: { user },
     } = await supabase.auth.getUser()
 
-    // Protected routes - only check if user exists, role check happens in layout
-    const isProtectedRoute = request.nextUrl.pathname.startsWith('/admin') ||
-        request.nextUrl.pathname.startsWith('/trabajador')
+    // Protected routes - only check if user exists
+    const isProtectedRoute = request.nextUrl.pathname.startsWith('/admin')
 
     if (!user && isProtectedRoute) {
         const url = request.nextUrl.clone()
@@ -41,17 +40,10 @@ export async function updateSession(request: NextRequest) {
         return NextResponse.redirect(url)
     }
 
-    // Only redirect from login page - this is the only place we need to check role
+    // Only redirect from login page
     if (user && request.nextUrl.pathname === '/') {
-        // Get user profile to determine role (only on login page)
-        const { data: profile } = await supabase
-            .from('profiles')
-            .select('rol')
-            .eq('id', user.id)
-            .single()
-
         const url = request.nextUrl.clone()
-        url.pathname = profile?.rol === 'admin' ? '/admin' : '/trabajador'
+        url.pathname = '/admin'
         return NextResponse.redirect(url)
     }
 

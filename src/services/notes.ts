@@ -57,7 +57,7 @@ export async function getWorkerNotes(workerId: string): Promise<NoteWithDetails[
             patente: vehicle.patente,
             marca: vehicle.marca,
             modelo: vehicle.modelo,
-            año: vehicle.ano,
+            año: vehicle.año,
             color: vehicle.color
         } : null
 
@@ -103,7 +103,7 @@ export async function getAllNotes(): Promise<NoteWithDetails[]> {
             patente: vehicle.patente,
             marca: vehicle.marca,
             modelo: vehicle.modelo,
-            año: vehicle.ano,
+            año: vehicle.año,
             color: vehicle.color
         } : null
 
@@ -146,10 +146,9 @@ export async function getServicesByVehiclePatente(patente: string) {
                 patente: vehicle.patente,
                 marca: vehicle.marca,
                 modelo: vehicle.modelo,
-                año: vehicle.ano,
+                año: vehicle.año,
                 color: vehicle.color
             } : null
         }
     })
 }
-

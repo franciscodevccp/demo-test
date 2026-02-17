@@ -72,12 +72,12 @@ function formatCurrency(amount: number | null) {
 
 export default async function ServiceDetailPage({ params }: ServiceDetailPageProps) {
     const { id } = await params
-    
+
     // Validate UUID format
     if (!isValidUUID(id)) {
         notFound()
     }
-    
+
     const service = await getServiceById(id)
 
     if (!service) {
@@ -98,11 +98,19 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
     const commissionsTotal = commissions.reduce((sum: number, c: { monto_comision: number | null }) => sum + (c.monto_comision || 0), 0)
 
     // Evidencia inicial - parse JSON string from database
-    const evidenciaInicial = service.evidencia_inicial
-        ? (typeof service.evidencia_inicial === 'string'
-            ? JSON.parse(service.evidencia_inicial)
-            : service.evidencia_inicial) as { imagenes?: string[]; videos?: string[]; fecha?: string } | null
-        : null
+    let evidenciaInicial: { imagenes?: string[]; videos?: string[]; fecha?: string } | null = null;
+
+    if (service.evidencia_inicial) {
+        if (typeof service.evidencia_inicial === 'string') {
+            try {
+                evidenciaInicial = JSON.parse(service.evidencia_inicial);
+            } catch (e) {
+                console.error('Error parsing evidencia_inicial:', e);
+            }
+        } else {
+            evidenciaInicial = service.evidencia_inicial as any;
+        }
+    }
 
     return (
         <div className="flex flex-col min-h-screen">
@@ -383,94 +391,94 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
                         )}
 
                         {/* Evidencia Inicial */}
-                        {((evidenciaInicial?.imagenes && evidenciaInicial.imagenes.length > 0) || 
-                          (evidenciaInicial?.videos && evidenciaInicial.videos.length > 0)) && (
-                            <Card className="border-zinc-800 bg-zinc-900/50">
-                                <CardHeader>
-                                    <CardTitle className="text-lg text-white flex items-center gap-2">
-                                        <Camera className="h-5 w-5 text-orange-400" />
-                                        Evidencia Inicial
-                                    </CardTitle>
-                                    <CardDescription className="text-zinc-400">
-                                        {(() => {
-                                            const imageCount = evidenciaInicial?.imagenes?.length || 0
-                                            const videoCount = evidenciaInicial?.videos?.length || 0
-                                            const parts: string[] = []
-                                            if (imageCount > 0) {
-                                                parts.push(`${imageCount} ${imageCount === 1 ? 'imagen' : 'imágenes'}`)
-                                            }
-                                            if (videoCount > 0) {
-                                                parts.push(`${videoCount} ${videoCount === 1 ? 'video' : 'videos'}`)
-                                            }
-                                            return parts.join(' • ')
-                                        })()}
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent className="space-y-4">
-                                    {/* Imágenes */}
-                                    {evidenciaInicial?.imagenes && evidenciaInicial.imagenes.length > 0 && (
-                                        <div>
-                                            <h4 className="text-sm font-semibold text-zinc-400 mb-2">Imágenes</h4>
-                                            <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
-                                                {evidenciaInicial.imagenes.map((url: string, idx: number) => (
-                                                    <a
-                                                        key={`img-${idx}`}
-                                                        href={url}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="relative aspect-square rounded-md overflow-hidden bg-zinc-800 hover:ring-2 hover:ring-orange-400 transition-all group"
-                                                    >
-                                                        <img
-                                                            src={url}
-                                                            alt={`Evidencia ${idx + 1}`}
-                                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                                                        />
-                                                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                                            <Download className="h-5 w-5 text-white" />
-                                                        </div>
-                                                    </a>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {/* Videos */}
-                                    {evidenciaInicial?.videos && evidenciaInicial.videos.length > 0 && (
-                                        <div>
-                                            <h4 className="text-sm font-semibold text-zinc-400 mb-2 flex items-center gap-2">
-                                                <Video className="h-4 w-4" />
-                                                Videos
-                                            </h4>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                                {evidenciaInicial.videos.map((url: string, idx: number) => (
-                                                    <div
-                                                        key={`video-${idx}`}
-                                                        className="relative rounded-md overflow-hidden bg-zinc-800 border border-zinc-700"
-                                                    >
-                                                        <video
-                                                            src={url}
-                                                            controls
-                                                            className="w-full aspect-video object-cover"
-                                                            preload="metadata"
-                                                        >
-                                                            Tu navegador no soporta el elemento de video.
-                                                        </video>
+                        {((evidenciaInicial?.imagenes && evidenciaInicial.imagenes.length > 0) ||
+                            (evidenciaInicial?.videos && evidenciaInicial.videos.length > 0)) && (
+                                <Card className="border-zinc-800 bg-zinc-900/50">
+                                    <CardHeader>
+                                        <CardTitle className="text-lg text-white flex items-center gap-2">
+                                            <Camera className="h-5 w-5 text-orange-400" />
+                                            Evidencia Inicial
+                                        </CardTitle>
+                                        <CardDescription className="text-zinc-400">
+                                            {(() => {
+                                                const imageCount = evidenciaInicial?.imagenes?.length || 0
+                                                const videoCount = evidenciaInicial?.videos?.length || 0
+                                                const parts: string[] = []
+                                                if (imageCount > 0) {
+                                                    parts.push(`${imageCount} ${imageCount === 1 ? 'imagen' : 'imágenes'}`)
+                                                }
+                                                if (videoCount > 0) {
+                                                    parts.push(`${videoCount} ${videoCount === 1 ? 'video' : 'videos'}`)
+                                                }
+                                                return parts.join(' • ')
+                                            })()}
+                                        </CardDescription>
+                                    </CardHeader>
+                                    <CardContent className="space-y-4">
+                                        {/* Imágenes */}
+                                        {evidenciaInicial?.imagenes && evidenciaInicial.imagenes.length > 0 && (
+                                            <div>
+                                                <h4 className="text-sm font-semibold text-zinc-400 mb-2">Imágenes</h4>
+                                                <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
+                                                    {evidenciaInicial.imagenes.map((url: string, idx: number) => (
                                                         <a
+                                                            key={`img-${idx}`}
                                                             href={url}
                                                             target="_blank"
                                                             rel="noopener noreferrer"
-                                                            className="absolute top-2 right-2 bg-black/70 hover:bg-black/90 rounded-md p-2 transition-colors"
+                                                            className="relative aspect-square rounded-md overflow-hidden bg-zinc-800 hover:ring-2 hover:ring-orange-400 transition-all group"
                                                         >
-                                                            <Download className="h-4 w-4 text-white" />
+                                                            <img
+                                                                src={url}
+                                                                alt={`Evidencia ${idx + 1}`}
+                                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                                                            />
+                                                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                                <Download className="h-5 w-5 text-white" />
+                                                            </div>
                                                         </a>
-                                                    </div>
-                                                ))}
+                                                    ))}
+                                                </div>
                                             </div>
-                                        </div>
-                                    )}
-                                </CardContent>
-                            </Card>
-                        )}
+                                        )}
+
+                                        {/* Videos */}
+                                        {evidenciaInicial?.videos && evidenciaInicial.videos.length > 0 && (
+                                            <div>
+                                                <h4 className="text-sm font-semibold text-zinc-400 mb-2 flex items-center gap-2">
+                                                    <Video className="h-4 w-4" />
+                                                    Videos
+                                                </h4>
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                                    {evidenciaInicial.videos.map((url: string, idx: number) => (
+                                                        <div
+                                                            key={`video-${idx}`}
+                                                            className="relative rounded-md overflow-hidden bg-zinc-800 border border-zinc-700"
+                                                        >
+                                                            <video
+                                                                src={url}
+                                                                controls
+                                                                className="w-full aspect-video object-cover"
+                                                                preload="metadata"
+                                                            >
+                                                                Tu navegador no soporta el elemento de video.
+                                                            </video>
+                                                            <a
+                                                                href={url}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="absolute top-2 right-2 bg-black/70 hover:bg-black/90 rounded-md p-2 transition-colors"
+                                                            >
+                                                                <Download className="h-4 w-4 text-white" />
+                                                            </a>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+                                    </CardContent>
+                                </Card>
+                            )}
                     </div>
 
                     {/* Sidebar */}
@@ -622,9 +630,9 @@ export default async function ServiceDetailPage({ params }: ServiceDetailPagePro
                                     </div>
                                 )}
                                 <Separator className="bg-zinc-700" />
-                                <DeleteServiceButton 
-                                    serviceId={service.id} 
-                                    serviceNumber={service.numero_servicio} 
+                                <DeleteServiceButton
+                                    serviceId={service.id}
+                                    serviceNumber={service.numero_servicio}
                                 />
                             </CardContent>
                         </Card>

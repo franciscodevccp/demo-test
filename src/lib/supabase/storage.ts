@@ -8,10 +8,13 @@ export async function uploadImages(files: File[], bucket: string, folder: string
 
     console.log(`Mock Upload Images to ${bucket}/${folder}:`, files.map(f => f.name))
 
-    return files.map((file, index) => {
-        // Return a dummy placeholder image
-        return `https://placehold.co/600x400?text=${encodeURIComponent(file.name)}`
-    })
+    return {
+        urls: files.map((file, index) => {
+            // Return a dummy placeholder image
+            return `https://placehold.co/600x400?text=${encodeURIComponent(file.name)}`
+        }),
+        errors: []
+    }
 }
 
 /**
@@ -23,10 +26,13 @@ export async function uploadVideos(files: File[], bucket: string, folder: string
 
     console.log(`Mock Upload Videos to ${bucket}/${folder}:`, files.map(f => f.name))
 
-    return files.map((file, index) => {
-        // Return a dummy video placeholder (or just null/string)
-        return `https://example.com/mock-video-${index}.mp4`
-    })
+    return {
+        urls: files.map((file, index) => {
+            // Return a dummy video placeholder (or just null/string)
+            return `https://example.com/mock-video-${index}.mp4`
+        }),
+        errors: []
+    }
 }
 
 /**

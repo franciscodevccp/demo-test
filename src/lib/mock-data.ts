@@ -7,13 +7,7 @@ export const MOCK_USERS = [
         rol: 'admin',
         nombre: 'Administrador Demo'
     },
-    {
-        id: 'user-worker-123',
-        email: 'trabajador@innovautos.cl',
-        password: 'demo',
-        rol: 'trabajador',
-        nombre: 'Carlos Trabajador'
-    }
+
 ]
 
 export const MOCK_CUSTOMERS = [
@@ -46,7 +40,7 @@ export const MOCK_VEHICLES = [
         marca: 'Toyota',
         modelo: 'Corolla',
         color: 'Blanco',
-        ano: 2020,
+        año: 2020,
         kilometraje: 45000,
         customer_id: 'cust-1',
         created_at: new Date().toISOString(),
@@ -58,7 +52,7 @@ export const MOCK_VEHICLES = [
         marca: 'Mazda',
         modelo: '3',
         color: 'Rojo',
-        ano: 2022,
+        año: 2022,
         kilometraje: 15000,
         customer_id: 'cust-2',
         created_at: new Date().toISOString(),
@@ -78,7 +72,12 @@ export const MOCK_SERVICES = [
         descripcion: 'Cambio de aceite y filtros',
         costo_estimado: 150000,
         costo_final: null,
-        trabajador_id: 'user-worker-123'
+        trabajador_id: 'user-worker-123',
+        evidencia_inicial: null,
+        observaciones_finales: null,
+        diagnostico: null,
+        trabajos_realizados: null,
+        repuestos_utilizados: null
     },
     {
         id: 'svc-2',
@@ -91,20 +90,17 @@ export const MOCK_SERVICES = [
         descripcion: 'Lavado interior y exterior',
         costo_estimado: 25000,
         costo_final: 25000,
-        trabajador_id: 'user-worker-123'
+        trabajador_id: 'user-worker-123',
+        evidencia_inicial: null,
+        observaciones_finales: null,
+        diagnostico: null,
+        trabajos_realizados: null,
+        repuestos_utilizados: null
     }
 ]
 
 export const MOCK_WORKERS = [
-    {
-        id: 'user-worker-123',
-        nombre: 'Carlos Trabajador',
-        email: 'trabajador@innovautos.cl',
-        especialidad: 'Mecánica General',
-        telefono: '+56911112222',
-        estado: 'activo',
-        fecha_contratacion: '2023-01-15'
-    }
+
 ]
 
 export const MOCK_STATS = {

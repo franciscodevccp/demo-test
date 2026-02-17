@@ -3,8 +3,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { FileCheck, Calendar, User, Car, Eye } from 'lucide-react'
 import { getQualityReports } from '@/services/quality-reports'
-import { ApproveQualityReportButton } from '@/components/admin/quality/approve-quality-report-button'
-import { RejectQualityReportButton } from '@/components/admin/quality/reject-quality-report-button'
+// import { ApproveQualityReportButton } from '@/components/admin/quality/approve-quality-report-button'
+// import { RejectQualityReportButton } from '@/components/admin/quality/reject-quality-report-button'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
@@ -206,8 +206,7 @@ export default async function CalidadPage() {
                                                     )}
                                                     {report.estado === 'pendiente' && (
                                                         <div className="flex gap-2">
-                                                            <ApproveQualityReportButton reportId={report.id} />
-                                                            <RejectQualityReportButton reportId={report.id} />
+                                                            {/* Buttons removed for view-only mode */}
                                                         </div>
                                                     )}
                                                 </div>
