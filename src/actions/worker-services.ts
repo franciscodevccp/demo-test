@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
+import { ServiceTask } from '@/types/database'
 
 export async function startService(serviceId: string, workerId: string, workerRole: string) {
     // Simulate network delay
@@ -8,6 +9,48 @@ export async function startService(serviceId: string, workerId: string, workerRo
     console.log(`Mock Start Service ${serviceId} for Worker ${workerId} (${workerRole})`)
     revalidatePath('/trabajador/servicios')
     return { success: true }
+}
+
+export async function acceptService(serviceId: string, workerRole: string) {
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 500))
+    console.log(`Mock Accept Service ${serviceId} for role ${workerRole}`)
+    revalidatePath('/trabajador/servicios')
+    return { success: true }
+}
+
+export async function getServiceTasksWithPanosAction(serviceId: string) {
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 500))
+    console.log(`Mock Get Service Tasks for ${serviceId}`)
+
+    // Return mock tasks
+    const tasks: ServiceTask[] = [
+        {
+            id: 'mock-task-1',
+            service_id: serviceId,
+            descripcion: 'Limpieza exterior con paños',
+            tiempo_estimado_minutos: 30,
+            costo_mano_obra: 5000,
+            panos: 2,
+            completado: false,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+        },
+        {
+            id: 'mock-task-2',
+            service_id: serviceId,
+            descripcion: 'Revisión general',
+            tiempo_estimado_minutos: 15,
+            costo_mano_obra: 2000,
+            panos: 0,
+            completado: false,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+        }
+    ]
+
+    return { tasks }
 }
 
 export async function completeWorkerService(

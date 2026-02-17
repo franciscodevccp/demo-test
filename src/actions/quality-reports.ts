@@ -21,6 +21,29 @@ export async function createQualityReport(serviceId: string, workerId: string, f
     return { success: true }
 }
 
+export async function startQualityControl(serviceId: string, workerId: string) {
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 500))
+    console.log(`Mock Start Quality Control for Service ${serviceId} by Worker ${workerId}`)
+    revalidatePath('/trabajador/servicios')
+    return { success: true }
+}
+
+export async function submitQualityEvidence(data: {
+    serviceId: string
+    workerId: string
+    descripcion: string
+    fallas: string[]
+    imagenes: string[]
+    videos: string[]
+}) {
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    console.log(`Mock Submit Quality Evidence:`, data)
+    revalidatePath('/trabajador/servicios')
+    return { success: true }
+}
+
 export async function approveQualityReport(reportId: string, comments: string) {
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 300))
