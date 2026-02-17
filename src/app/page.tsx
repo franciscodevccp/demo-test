@@ -2,42 +2,14 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import { login, loginAsAdmin } from '@/actions/auth'
+import { loginAsAdmin } from '@/actions/auth'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Loader2, Mail, Lock } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
-
-  async function handleSubmit(formData: FormData) {
-    setIsLoading(true)
-
-    try {
-      const result = await login(formData)
-
-      if (result?.error) {
-        toast.error('Error de autenticación', {
-          description: result.error === 'Invalid login credentials'
-            ? 'Email o contraseña incorrectos'
-            : result.error,
-        })
-        setIsLoading(false)
-      }
-    } catch (error) {
-      // Next.js throws NEXT_REDIRECT on successful redirect, ignore it
-      if (error instanceof Error && error.message.includes('NEXT_REDIRECT')) {
-        return
-      }
-      toast.error('Error inesperado', {
-        description: 'Por favor, intente nuevamente',
-      })
-      setIsLoading(false)
-    }
-  }
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black">
@@ -86,7 +58,10 @@ export default function LoginPage() {
           <CardContent>
             <form action={() => {
               setIsLoading(true)
-              loginAsAdmin().catch(() => {
+              loginAsAdmin().catch((error) => {
+                if (error.message && error.message.includes('NEXT_REDIRECT')) {
+                  return
+                }
                 toast.error('Error al iniciar sesión')
                 setIsLoading(false)
               })

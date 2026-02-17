@@ -180,7 +180,7 @@ export const MOCK_QUALITY_REPORTS = [
     {
         id: 'qr-1',
         service_id: 'svc-1',
-        worker_id: 'user-worker-123',
+        worker_id: 'user-admin-123',
         aprobado_por_id: 'user-admin-123',
         rechazado_por_id: null,
         estado: 'aprobado',
@@ -191,17 +191,7 @@ export const MOCK_QUALITY_REPORTS = [
     }
 ]
 
-export const MOCK_NOTES = [
-    {
-        id: 'note-1',
-        service_id: 'svc-1',
-        worker_id: 'user-worker-123',
-        titulo: 'Nota sobre el aceite',
-        contenido: 'El cliente pidió revisar también el filtro de aire.',
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
-    }
-]
+
 
 
 

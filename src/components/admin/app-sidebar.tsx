@@ -13,7 +13,6 @@ import {
     DollarSign,
     BarChart3,
     LogOut,
-    StickyNote,
     Activity,
 } from 'lucide-react'
 
@@ -32,7 +31,6 @@ import {
     SidebarSeparator,
 } from '@/components/ui/sidebar'
 import { logout } from '@/actions/auth'
-import { getNotesCountAction } from '@/actions/notes'
 import type { Profile } from '@/types/database'
 
 const menuItems = [
@@ -55,7 +53,6 @@ const menuItems = [
             { title: 'Clientes', href: '/admin/clientes', icon: Users },
             { title: 'Trabajadores', href: '/admin/trabajadores', icon: UserCog },
             { title: 'Actividad de Trabajadores', href: '/admin/actividad-trabajadores', icon: Activity },
-            { title: 'Notas de Trabajadores', href: '/admin/notas-trabajadores', icon: StickyNote },
         ],
     },
     {
@@ -73,46 +70,6 @@ interface AppSidebarProps {
 
 export function AppSidebar({ user }: AppSidebarProps) {
     const pathname = usePathname()
-    const [notesCount, setNotesCount] = useState<number | null>(null)
-
-    // Cargar el conteo de notas no vistas
-    async function loadNotesCount() {
-        const result = await getNotesCountAction()
-        
-        // Obtener notas vistas del localStorage
-        const viewedNotesStr = localStorage.getItem('admin-viewed-notes')
-        const viewedNotes: string[] = viewedNotesStr ? JSON.parse(viewedNotesStr) : []
-        
-        // Calcular notas no vistas
-        const unreadCount = result.total - viewedNotes.length
-        setNotesCount(unreadCount > 0 ? unreadCount : 0)
-    }
-
-    useEffect(() => {
-        loadNotesCount()
-        
-        // Actualizar el conteo cada 30 segundos
-        const interval = setInterval(() => {
-            loadNotesCount()
-        }, 30000)
-
-        return () => clearInterval(interval)
-    }, [])
-
-    // Actualizar el conteo cuando cambie el pathname (al navegar)
-    useEffect(() => {
-        loadNotesCount()
-    }, [pathname])
-    
-    // Escuchar eventos de notas marcadas como vistas
-    useEffect(() => {
-        function handleNoteViewed() {
-            loadNotesCount()
-        }
-        
-        window.addEventListener('note-viewed', handleNoteViewed)
-        return () => window.removeEventListener('note-viewed', handleNoteViewed)
-    }, [])
 
     return (
         <Sidebar className="border-r border-zinc-800">
@@ -142,10 +99,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
                             <SidebarMenu>
                                 {group.items.map((item) => {
                                     const isActive = pathname === item.href
-                                    const isNotesItem = item.href === '/admin/notas-trabajadores'
-                                    // Mostrar badge si hay notas y NO estamos en la página de notas
-                                    const showBadge = isNotesItem && notesCount !== null && notesCount > 0 && !isActive
-                                    
+
                                     return (
                                         <SidebarMenuItem key={item.href}>
                                             <SidebarMenuButton
@@ -160,11 +114,6 @@ export function AppSidebar({ user }: AppSidebarProps) {
                                                 <Link href={item.href}>
                                                     <item.icon className="h-4 w-4" />
                                                     <span>{item.title}</span>
-                                                    {showBadge && (
-                                                        <SidebarMenuBadge className="bg-red-600 text-white">
-                                                            {notesCount}
-                                                        </SidebarMenuBadge>
-                                                    )}
                                                 </Link>
                                             </SidebarMenuButton>
                                         </SidebarMenuItem>
