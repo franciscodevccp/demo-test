@@ -1,0 +1,207 @@
+
+export const MOCK_USERS = [
+    {
+        id: 'user-admin-123',
+        email: 'admin@innovautos.cl',
+        password: 'admin', // In a real app never store plan text passwords, but this is a mock
+        rol: 'admin',
+        nombre: 'Administrador Demo'
+    },
+    {
+        id: 'user-worker-123',
+        email: 'trabajador@innovautos.cl',
+        password: 'demo',
+        rol: 'trabajador',
+        nombre: 'Carlos Trabajador'
+    }
+]
+
+export const MOCK_CUSTOMERS = [
+    {
+        id: 'cust-1',
+        nombre: 'Juan Pérez',
+        email: 'juan.perez@email.com',
+        telefono: '+56912345678',
+        rut: '12.345.678-9',
+        direccion: 'Av. Siempre Viva 123',
+        created_at: new Date().toISOString()
+    },
+    {
+        id: 'cust-2',
+        nombre: 'María González',
+        email: 'maria.gonzalez@email.com',
+        telefono: '+56987654321',
+        rut: '98.765.432-1',
+        direccion: 'Calle Falsa 123',
+        created_at: new Date().toISOString()
+    }
+]
+
+export const MOCK_VEHICLES = [
+    {
+        id: 'veh-1',
+        patente: 'ABCD12',
+        marca: 'Toyota',
+        modelo: 'Corolla',
+        color: 'Blanco',
+        ano: 2020,
+        kilometraje: 45000,
+        customer_id: 'cust-1',
+        created_at: new Date().toISOString()
+    },
+    {
+        id: 'veh-2',
+        patente: 'XYZA98',
+        marca: 'Mazda',
+        modelo: '3',
+        color: 'Rojo',
+        ano: 2022,
+        kilometraje: 15000,
+        customer_id: 'cust-2',
+        created_at: new Date().toISOString()
+    }
+]
+
+export const MOCK_SERVICES = [
+    {
+        id: 'svc-1',
+        estado: 'en_progreso',
+        fecha_ingreso: new Date().toISOString(),
+        fecha_termino: null,
+        vehicle_id: 'veh-1',
+        customer_id: 'cust-1',
+        tipo_servicio: 'Mantenimiento General',
+        descripcion: 'Cambio de aceite y filtros',
+        costo_estimado: 150000,
+        costo_final: null,
+        trabajador_id: 'user-worker-123'
+    },
+    {
+        id: 'svc-2',
+        estado: 'completado',
+        fecha_ingreso: new Date(Date.now() - 86400000 * 5).toISOString(), // 5 days ago
+        fecha_termino: new Date(Date.now() - 86400000 * 2).toISOString(), // 2 days ago
+        vehicle_id: 'veh-2',
+        customer_id: 'cust-2',
+        tipo_servicio: 'Lavado Full',
+        descripcion: 'Lavado interior y exterior',
+        costo_estimado: 25000,
+        costo_final: 25000,
+        trabajador_id: 'user-worker-123'
+    }
+]
+
+export const MOCK_WORKERS = [
+    {
+        id: 'user-worker-123',
+        nombre: 'Carlos Trabajador',
+        email: 'trabajador@innovautos.cl',
+        especialidad: 'Mecánica General',
+        telefono: '+56911112222',
+        estado: 'activo',
+        fecha_contratacion: '2023-01-15'
+    }
+]
+
+export const MOCK_STATS = {
+    clientes_totales: MOCK_CUSTOMERS.length,
+    vehiculos_totales: MOCK_VEHICLES.length,
+    servicios_activos: MOCK_SERVICES.filter(s => s.estado === 'en_progreso').length,
+    ingresos_del_mes: 2500000
+}
+
+export const MOCK_WORKER_HISTORY = [
+    {
+        id: 'hist-1',
+        service_id: 'svc-1',
+        worker_id: 'user-worker-123',
+        worker_role: 'mecanico',
+        estado: 'en_proceso',
+        evidencia: null,
+        evidencia_imagenes: [],
+        fecha_inicio_trabajo: new Date().toISOString(),
+        hora_inicio_trabajo: '10:00',
+        fecha_fin_trabajo: null,
+        hora_fin_trabajo: null,
+        evidencia_agregada: false,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+    }
+]
+
+export const MOCK_PARTS = [
+    {
+        id: 'part-1',
+        service_id: 'svc-1',
+        nombre_repuesto: 'Filtro de Aceite',
+        cantidad: 1,
+        precio_unitario: 15000,
+        precio_total: 15000,
+        codigo_parte: 'FIL-001',
+        created_at: new Date().toISOString()
+    }
+]
+
+export const MOCK_COMMISSIONS = [
+    {
+        id: 'comm-1',
+        service_id: 'svc-2',
+        worker_id: 'user-worker-123',
+        worker_role: 'lavado',
+        monto_base: 25000,
+        porcentaje: 40,
+        monto_comision: 10000,
+        estado: 'pagada',
+        created_at: new Date(Date.now() - 86400000 * 2).toISOString(),
+        updated_at: new Date().toISOString()
+    }
+]
+
+export const MOCK_PANOS = []
+
+export const MOCK_SALARY_PAYMENTS = [
+    {
+        id: 'pay-1',
+        worker_id: 'user-worker-123',
+        tipo_pago: 'comision',
+        monto: 250000,
+        cantidad_panos: null,
+        precio_pano: null,
+        fecha_pago: new Date(Date.now() - 86400000 * 10).toISOString(),
+        descripcion: 'Pago comisiones semana anterior',
+        comprobante_imagenes: [],
+        created_by_id: 'user-admin-123',
+        created_at: new Date(Date.now() - 86400000 * 10).toISOString(),
+        updated_at: new Date(Date.now() - 86400000 * 10).toISOString()
+    }
+]
+
+export const MOCK_QUALITY_REPORTS = [
+    {
+        id: 'qr-1',
+        service_id: 'svc-1',
+        worker_id: 'user-worker-123',
+        aprobado_por_id: 'user-admin-123',
+        rechazado_por_id: null,
+        estado: 'aprobado',
+        comentarios: 'Buen trabajo, todo limpio.',
+        calificacion: 5,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+    }
+]
+
+export const MOCK_NOTES = [
+    {
+        id: 'note-1',
+        service_id: 'svc-1',
+        worker_id: 'user-worker-123',
+        titulo: 'Nota sobre el aceite',
+        contenido: 'El cliente pidió revisar también el filtro de aire.',
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+    }
+]
+
+
+

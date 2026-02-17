@@ -1,0 +1,268 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================
+   Innovautos Design System
+   ============================================ */
+
+@theme inline {
+  /* Base Colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Fonts */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Component Colors */
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Charts */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Sidebar */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Border Radius */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+}
+
+/* ============================================
+   Innovautos Color Palette
+   Based on instructivo.md specifications
+   ============================================ */
+
+:root {
+  --radius: 0.5rem;
+
+  /* Light mode (not used, but keeping for compatibility) */
+  --background: #ffffff;
+  --foreground: #000000;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --popover: #ffffff;
+  --popover-foreground: #000000;
+  --primary: #ef4444;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f5;
+  --secondary-foreground: #000000;
+  --muted: #f5f5f5;
+  --muted-foreground: #525252;
+  --accent: #f5f5f5;
+  --accent-foreground: #000000;
+  --destructive: #ef4444;
+  --border: #e5e5e5;
+  --input: #e5e5e5;
+  --ring: #ef4444;
+
+  /* Charts */
+  --chart-1: #ef4444;
+  --chart-2: #3b82f6;
+  --chart-3: #22c55e;
+  --chart-4: #f59e0b;
+  --chart-5: #8b5cf6;
+
+  /* Sidebar */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #000000;
+  --sidebar-primary: #ef4444;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f5f5f5;
+  --sidebar-accent-foreground: #000000;
+  --sidebar-border: #e5e5e5;
+  --sidebar-ring: #ef4444;
+}
+
+/* ============================================
+   Dark Mode (Primary Mode for Innovautos)
+   ============================================ */
+
+.dark {
+  /* Backgrounds */
+  --background: #000000;
+  --foreground: #ffffff;
+
+  /* Cards & Surfaces */
+  --card: #0a0a0a;
+  --card-foreground: #ffffff;
+  --popover: #0a0a0a;
+  --popover-foreground: #ffffff;
+
+  /* Primary - Innovautos Red */
+  --primary: #ef4444;
+  --primary-foreground: #ffffff;
+
+  /* Secondary */
+  --secondary: #141414;
+  --secondary-foreground: #ffffff;
+
+  /* Muted */
+  --muted: #141414;
+  --muted-foreground: #a1a1a1;
+
+  /* Accent */
+  --accent: #1a1a1a;
+  --accent-foreground: #ffffff;
+
+  /* Destructive */
+  --destructive: #b91c1c;
+
+  /* Borders & Inputs */
+  --border: #262626;
+  --input: #262626;
+  --ring: #ef4444;
+
+  /* Charts - Status Colors */
+  --chart-1: #ef4444; /* Primary Red */
+  --chart-2: #3b82f6; /* En Proceso - Blue */
+  --chart-3: #22c55e; /* Completado - Green */
+  --chart-4: #f59e0b; /* Pendiente - Amber */
+  --chart-5: #f97316; /* Rechazado - Orange */
+
+  /* Sidebar */
+  --sidebar: #0a0a0a;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #ef4444;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1a1a1a;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #262626;
+  --sidebar-ring: #ef4444;
+}
+
+/* ============================================
+   Status Colors (for badges, etc)
+   ============================================ */
+
+.dark {
+  /* Pendiente - Amber */
+  --status-pendiente: #f59e0b;
+  --status-pendiente-bg: rgba(245, 158, 11, 0.1);
+
+  /* En Proceso - Blue */
+  --status-en-proceso: #3b82f6;
+  --status-en-proceso-bg: rgba(59, 130, 246, 0.1);
+
+  /* Completado - Green */
+  --status-completado: #22c55e;
+  --status-completado-bg: rgba(34, 197, 94, 0.1);
+
+  /* Cancelado - Red */
+  --status-cancelado: #ef4444;
+  --status-cancelado-bg: rgba(239, 68, 68, 0.1);
+
+  /* Rechazado - Orange */
+  --status-rechazado: #f97316;
+  --status-rechazado-bg: rgba(249, 115, 22, 0.1);
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar for dark mode */
+  .dark ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .dark ::-webkit-scrollbar-track {
+    background: #0a0a0a;
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 4px;
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: #404040;
+  }
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+
+@layer utilities {
+  /* Patente font (monospace for license plates) */
+  .font-patente {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    letter-spacing: 0.05em;
+  }
+
+  /* Primary glow effect for hover states */
+  .glow-primary {
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+  }
+
+  /* Surface elevated background */
+  .bg-surface-elevated {
+    background-color: #141414;
+  }
+
+  /* Surface hover background */
+  .bg-surface-hover {
+    background-color: #1a1a1a;
+  }
+
+  /* Hide number input arrows/spinners */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+}
